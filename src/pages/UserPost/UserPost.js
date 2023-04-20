@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { PostCard } from "./components/PostCard";
 
 
@@ -18,13 +18,14 @@ export const UserPost=()=>{
 
     const postPerPage = 2;
 
-    const params = useParams();
+    const {state} = useLocation()
+    
     useEffect(()=>{
         fetch('https://jsonplaceholder.typicode.com/posts/')
         .then(res=>res.json())
         .then((data)=>{
                 
-            let post = data.filter((post)=>{return post.userId==params.id})
+            let post = data.filter((post)=>{return post.userId==state})
             setAllPost(post)
             setTotalPages(5)
             setcurrentPost(post.slice(0,postPerPage))

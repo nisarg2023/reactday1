@@ -9,7 +9,7 @@ function App() {
      <BrowserRouter>
      <Routes>
       <Route path='/' element={<Users/>}></Route>
-      <Route path='/post/:id' element={<UserPost/>}>
+      <Route path='/post/' element={<UserPost/>}>
         <Route path="comments" element={<p>comment</p>}/>
       </Route>
      </Routes>

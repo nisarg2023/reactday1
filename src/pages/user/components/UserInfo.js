@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 export const UserInfo = ({ user }) => {
 
+    const navigate = useNavigate();
     return (
         <>
             <tr>
@@ -32,6 +33,7 @@ export const UserInfo = ({ user }) => {
                 </td>
                 <td>
                     <Link to={`post/${user.id}`} >view <input type="hidden" value={user.id}/> </Link>
+                    <button onClick={()=>{navigate('post',{state:user.id})}}>view post</button>
 
                 </td>
             </tr>
