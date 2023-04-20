@@ -32,7 +32,8 @@ export const UserInfo = ({ user }) => {
                     {user.company.name}
                 </td>
                 <td>
-                    <Link to={`post/${user.id}`} >view <input type="hidden" value={user.id}/> </Link>
+                    {/* we can also pass stae in link components  */}
+                    {/* <Link to={`post/${user.id}`} >view <input type="hidden" value={user.id}/> </Link> */}
                     <button onClick={()=>{navigate('post',{state:user.id})}}>view post</button>
 
                 </td>

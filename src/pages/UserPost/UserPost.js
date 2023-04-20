@@ -13,10 +13,9 @@ export const UserPost=()=>{
     const [currentPost,setcurrentPost]= useState([]);
     const [pageNumber,setPageNumber]= useState(1);
 
-    const [currentComment, setCurrentComment] = useState([])
-    const [showcomment, setShowcomment] = useState(null)
 
-    const postPerPage = 2;
+
+    const postPerPage = 3;
 
     const {state} = useLocation()
     
@@ -27,7 +26,7 @@ export const UserPost=()=>{
                 
             let post = data.filter((post)=>{return post.userId==state})
             setAllPost(post)
-            setTotalPages(5)
+            setTotalPages(post.length/postPerPage)
             setcurrentPost(post.slice(0,postPerPage))
             
             
@@ -35,21 +34,23 @@ export const UserPost=()=>{
         })
     },[]);
 
-
+    useEffect(()=>{}
     
-    
-   
-   
+    ,[])
 
-    const handelviewcomment = (id)=>{
-        fetch(`https://jsonplaceholder.typicode.com/posts/${id}/comments`)
-        .then(res=>res.json())
-        .then(data=>{
-         
-            setShowcomment(id)
-            setCurrentComment(data);
-        })
-       
+
+    const handelLoadeMore =()=>{
+        const temp = pageNumber+1
+        setPageNumber(pageNumber+1);
+     
+        if(temp >totalPages)
+        {
+            alert("theare no more data available");
+        }
+        else{
+            setcurrentPost(allPost.slice(0,postPerPage*temp))
+        }
+        
     }
 
     return(
@@ -59,15 +60,13 @@ export const UserPost=()=>{
             {currentPost.map((post)=>
                 <PostCard key={post.id} 
                 post={post} 
-                currentComment={currentComment} 
-                handelviewcomment={handelviewcomment}
-                showcomment={showcomment}
+                
                 />
             )}
 
             </div>
 
-            <button onClick={()=>handelLoadeMore(pageNumber,setPageNumber,currentPost,setcurrentPost,postPerPage,allPost,totalPages)}>
+            <button onClick={handelLoadeMore}>
                 loade more
             </button>
         </>
@@ -75,14 +74,3 @@ export const UserPost=()=>{
 }
 
 
-const handelLoadeMore =(pageNumber,setPageNumber,currentPost,setcurrentPost,postPerPage,allPost,totalPages)=>{
-    setPageNumber(++pageNumber);
-    if(pageNumber >totalPages)
-    {
-        alert("theare no more data available");
-    }
-    else{
-        setcurrentPost(allPost.slice(0,postPerPage*pageNumber))
-    }
-    
-}
